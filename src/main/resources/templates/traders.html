@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav th:replace="fragments/sidebar :: sidebar">
+        Sidebar
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+        <!--        Navbar-->
+        <header th:replace="fragments/navbar::navigation"></header>
+
+
+        <!--Main content for every page -->
+
+        <!--Login -->
+        <section id="traders">
+
+            <div class="container">
+                <div class="row my-4">
+                    <div class="col-md-11 mb-2 mx-5">
+                        <h1>All Trades on CopyTradingForex To Copy</h1>
+                    </div>
+                </div>
+                <div class="row align-items-top ">
+                    <div th:each="t : ${traders}" th:object="${t}"
+                         class="my-2 col-xl-3 col-lg-4 col-md-6">
+                        <div class="card">
+                            <img th:src="*{imageUrl}" class="card-img-top" alt="...come soon">
+                            <div class="card-body card-text">
+                                <span>Economic Indicator:</span>
+                                <h5 th:text="*{fullName}" class="card-title">Full name</h5>
+
+                                <p th:text="|Total Yield, %: *{totalYield} |"> info</p>
+                                <p th:text="|Capital, USD: *{currentCapital}|"> info</p>
+                                <p th:text="|Experience, year: *{experience}| "> info</p>
+
+                                <a th:if="!${isJoinedToCopy}" th:href="@{/traders/{id}/copy (id = *{id})}"
+                                   class="btn btn-pos-details">Copy</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!--        Disclaimer-->
+        <div th:replace="fragments/disclaimer :: disclaimer">Disclaimer></div>
+    </div>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- <div class="line"></div> -->
+<div th:replace="fragments/sidebar-scripts :: sidebar-scripts">Disclaimer></div>
+</body>
+</html>

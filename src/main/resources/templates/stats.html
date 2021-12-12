@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav th:replace="fragments/sidebar :: sidebar">
+        Sidebar
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+        <!--        Navbar-->
+        <header th:replace="fragments/navbar::navigation"></header>
+
+        <!--Main content for every page -->
+
+        <!-- section What is Copy Trading on Forex -->
+        <section id="what_ctf" class="wr-what_is_ctf">
+
+            <div class="container">
+                <div class="row my-4 align-items-center justify-content-center ">
+                    <div class="col-md-11 mb-4">
+                        <h1>Statistics</h1>
+                    </div>
+                    <div class="col-md-5 text-center how-it-works">
+
+                        <h4 clas="text-center mt-5 "> Total Requests:
+                            <th:block th:text="${stats.getTotalRequest()}"></th:block>
+                        </h4>
+                        <h4 clas="text-center mt-5 how-it-works"> Authorized Requests:
+                            <th:block th:text="${stats.getAuthRequest()}"></th:block>
+                        </h4>
+                        <h4 clas="text-center mt-5 how-it-works"> Anonymous Requests:
+                            <th:block th:text="${stats.getAnonymRequest()}"></th:block>
+                        </h4>
+
+                    </div>
+                    <div class="col-md-6 align-items-end">
+                        <div><img src="/images/follow_us.jpg" class="coins" alt="Header image"></div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!--        Disclaimer-->
+        <div th:replace="fragments/disclaimer :: disclaimer">Disclaimer></div>
+    </div>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- <div class="line"></div> -->
+<div th:replace="fragments/sidebar-scripts :: sidebar-scripts">Disclaimer>
+</div>
+</body>
+</html>

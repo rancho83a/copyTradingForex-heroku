@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>CopyTradingForex</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/css/index.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav th:replace="fragments/sidebar :: sidebar">
+        Navbar
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <header th:replace="fragments/navbar::navigation"></header>
+
+        <!--Main content for every page -->
+
+        <div class="scene">
+            <img class="img-fluid logo" src="images/logo.png" alt="logo">
+
+            <div data-depth="0.4">
+                <p class="title_home">Real trade. True results</p>
+            </div>
+            <a class="billboard_link btn_dblue" href="/how-it-works">How it works</a>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="fragments/disclaimer :: disclaimer">Disclaimer>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<div th:replace="fragments/sidebar-scripts :: sidebar-scripts">Disclaimer></div>
+</body>
+</html>

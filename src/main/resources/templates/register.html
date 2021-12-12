@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav th:replace="fragments/sidebar :: sidebar">
+        Sidebar
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+        <!--        Navbar-->
+        <header th:replace="fragments/navbar::navigation"></header>
+
+
+        <!--Main content for every page -->
+
+
+        <section id="login">
+
+            <div class="container-fluid">
+                <div class="row my-4 align-items-center justify-content-center ">
+                    <div class="col-md-11 mb-2 mx-5">
+                        <h1>Become Trader or Investor</h1>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12">
+                        <form
+                                th:action="@{/users/register}"
+                                th:method="post"
+                                th:object="${userModel}"
+                                class="main-form mx-auto py-4 col-md-8 d-flex flex-column justify-content-center login-form">
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-3">
+                                    <label class="text-center font-weight-bold" for="roleId">Role</label>
+                                    <select
+                                            th:errorclass="'is-invalid bg-danger'"
+                                            id="roleId"
+                                            name="roleId"
+                                            class="form-control"
+                                            aria-describedby="roleError">
+                                        <option value="">- Select a role -</option>
+                                        <option th:each="role : ${traderInvestorRoles}"
+                                                th:text="${role.role}"
+                                                th:value="${role.id}"
+                                                th:selected="${role.id} == *{roleId}">Role
+                                        </option>
+
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}"
+                                           id="roleError"
+                                           class="rounded">
+                                        Role is required.
+                                    </small>
+                                </div>
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="password" class=" font-weight-bold">Password</label>
+                                    <input th:field="*{password}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="password" type="password"
+                                           class="form-control" placeholder="Password"
+                                           aria-describedby="passwordError">
+                                    <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                           id="passwordError"
+                                           class="rounded">
+
+                                    </small>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="username" class=" font-weight-bold">Username</label>
+                                    <input th:field="*{username}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="username" type="text"
+                                           class="form-control" placeholder="Username"
+                                           aria-describedby="usernameError">
+                                    <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                           id="usernameError"
+                                           class="rounded">
+                                        videoUrl is not required.
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="confirmPassword" class=" font-weight-bold">Confirm password</label>
+                                    <input th:field="*{confirmPassword}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="confirmPassword" type="password"
+                                           class="form-control" placeholder="Confirm password"
+                                           aria-describedby="confirmPasswordError">
+                                    <small th:if="${#fields.hasErrors('confirmPassword')}"
+                                           th:errors="*{confirmPassword}"
+                                           id="confirmPasswordError"
+                                           class="rounded">
+                                    </small>
+                                    <small th:unless="${isPasswordConfirm}" class="alert-danger">
+                                        Password confirm is wrong!
+                                    </small>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="fullName" class=" font-weight-bold">Full name</label>
+                                    <input th:field="*{fullName}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="fullName" type="text"
+                                           class="form-control" placeholder="Full name"
+                                           aria-describedby="fullNameError">
+                                    <small th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"
+                                           id="fullNameError"
+                                           class="rounded">
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="email" class=" font-weight-bold">Email</label>
+                                    <input th:field="*{email}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="email" type="text"
+                                           class="form-control" placeholder="Email"
+                                           aria-describedby="emailError">
+                                    <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                           id="emailError"
+                                           class="rounded">
+                                    </small>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="age" class=" font-weight-bold">Age</label>
+                                    <input th:field="*{age}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="age" type="number" min="0" step="1"
+                                           class="form-control" placeholder="Age"
+                                           aria-describedby="ageError">
+                                    <small th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+                                           id="ageError"
+                                           class="rounded">
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="experience" class=" font-weight-bold">Experience</label>
+                                    <input th:field="*{experience}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="experience" type="number" min="0" step="1"
+                                           class="form-control" placeholder="experience"
+                                           aria-describedby="emailError">
+                                    <small th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"
+                                           id="experienceError"
+                                           class="rounded">
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="capital" class=" font-weight-bold"> Capital</label>
+                                    <input th:field="*{currentCapital}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="capital" type="number" min="0" step="0.01"
+                                           class="form-control" placeholder="Capital"
+                                           aria-describedby="capitalError">
+                                    <small th:if="${#fields.hasErrors('currentCapital')}" th:errors="*{currentCapital}"
+                                           id="capitalError"
+                                           class="rounded">
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="imageUrl" class=" font-weight-bold">ImageUrl</label>
+                                    <input th:field="*{imageUrl}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="imageUrl" type="text"
+                                           class="form-control" placeholder="imageUrl"
+                                           aria-describedby="imageUrlError">
+                                    <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"
+                                           id="imageUrlError"
+                                           class="rounded">
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    <div class="button-holder d-flex">
+                                        <input type="submit" class="btn btn-info btn-lg btn-login"
+                                               value="Registration"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!--        Disclaimer-->
+        <div th:replace="fragments/disclaimer :: disclaimer">Disclaimer></div>
+    </div>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- <div class="line"></div> -->
+<div th:replace="fragments/sidebar-scripts :: sidebar-scripts">Disclaimer>
+</div>
+</body>
+</html>

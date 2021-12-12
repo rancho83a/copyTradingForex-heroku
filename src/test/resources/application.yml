@@ -1,0 +1,30 @@
+spring:
+  sql:
+    init:
+      #     mode: always
+      mode: never
+  jpa:
+    hibernate:
+      ddl-auto: create
+#  aop:
+#    auto: false
+
+cloudinary:
+  api-key: 446412117829948
+  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: drapmo8cx
+
+#Cron
+schedulers:
+  #every 10 sec
+  subscriptionFeeCronDefense: "*/10 * * * * *"
+  subscriptionFeeCronDefense1min: "0 * * * * *"
+
+  #At 00:00:00 on every day-of-week from Monday through Friday.
+  subscriptionFeeCron: "0 0 0 * * 1-5"
+
+  #“At 00:00 on Sunday.”
+  remunerationFeeCron: "0 0 0 * * 7"
+
+
+

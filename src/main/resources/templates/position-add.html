@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav th:replace="fragments/sidebar :: sidebar">
+        Sidebar
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+        <!--        Navbar-->
+        <header th:replace="fragments/navbar::navigation"></header>
+
+
+        <!--Main content for every page -->
+
+<!--        <th:block th:if="${notEnoughFunds}">-->
+<!--            <script th:src="@{/js/notEnoughFunds.js}"></script>-->
+
+<!--        </th:block>-->
+
+        <section id="login">
+
+            <div class="container-fluid">
+                <div class="row my-4 align-items-center justify-content-center ">
+                    <div class="col-md-11 mb-2 mx-5">
+                        <h1>Upload Position</h1>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12">
+                        <form
+                                th:action="@{/positions/add}" th:method="POST" th:object="${positionAddBindModel}"
+                                class="main-form mx-auto py-4 col-md-8 d-flex flex-column justify-content-center login-form">
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-3">
+                                    <label class="text-center font-weight-bold" for="economicIndicatorId">Economic_indicator</label>
+                                    <select
+                                            th:errorclass="'is-invalid bg-danger'"
+                                            id="economicIndicatorId"
+                                            name="economicIndicatorId"
+                                            class="form-control"
+                                            aria-describedby="indicatorError">
+
+                                        <option value="">- Select an economic indicator -</option>
+                                        <option th:each="indicator : ${economicIndicators}"
+                                                th:text="${indicator.indicator}"
+                                                th:value="${indicator.id}"
+                                                th:selected="${indicator.id} == *{economicIndicatorId}">Indicator
+                                        </option>
+
+                                    </select>
+                                    <small th:if="${#fields.hasErrors('economicIndicatorId')}" th:errors="*{economicIndicatorId}"
+                                           id="indicatorError"
+                                           class="rounded">
+                                        Open time is required.
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-3">
+                                    <label class="text-center font-weight-bold"
+                                           for="trade">Trade</label>
+                                    <select
+                                            th:errorclass="'is-invalid bg-danger'"
+                                            id="trade" name="trade"
+                                            class="form-control"
+                                            aria-describedby="tradeError">
+                                        <option value="">- Select trade type -</option>
+                                        <option th:each="t : ${T(forex.copytradingforex.model.entity.enums.TradeEnum).values()}"
+                                                th:text="${t}" th:value="${t}" th:selected="${t} == *{trade}">Trade type
+                                        </option>
+                                    </select>
+
+                                    <small th:if="${#fields.hasErrors('trade')}" th:errors="*{trade}"
+                                           id="tradeError"
+                                           class="rounded">
+                                        Open time is required.
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-3">
+                                    <label class="text-center  font-weight-bold"
+                                           for="openTime">Open time</label>
+
+                                    <input
+                                            th:field="*{openTime}"
+                                            th:errorclass="'is-invalid bg-danger'"
+                                            type="datetime-local"
+                                            class="form-control" id="openTime" name="openTime"
+                                            aria-describedby="openTimeError">
+                                    <small th:if="${#fields.hasErrors('openTime')}" th:errors="*{openTime}"
+                                           id="openTimeError"
+                                           class="rounded">
+                                        Open time is required.
+                                    </small>
+                                </div>
+
+                                <div class="form-group col-md-6 mb-3">
+                                    <label for="closeTime"
+                                           class="text-center  font-weight-bold">Close time</label>
+                                    <input
+                                            th:field="*{closeTime}"
+                                            th:errorclass="'is-invalid bg-danger'"
+                                            type="datetime-local" class="form-control" id="closeTime" name="closeTime"
+                                            aria-describedby="closeTimeError">
+                                    <small th:if="${#fields.hasErrors('closeTime')}" th:errors="*{closeTime}"
+                                           id="closeTimeError"
+                                           class="rounded">
+                                        Close time is required.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-3">
+                                    <label for="openPrice" class="text-center font-weight-bold">Open
+                                        price</label>
+                                    <input th:field="*{openPrice}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           name="openPrice"
+                                           id="openPrice" type="number" min="0" step="0.00001" class="form-control"
+                                           placeholder="Open price"
+                                           aria-describedby="openPriceError">
+                                    <small th:if="${#fields.hasErrors('openPrice')}" th:errors="*{openPrice}"
+                                           id="openPriceError"
+                                           class="rounded">
+                                        Open price is required.
+                                    </small>
+                                </div>
+
+
+                                <div class="form-group col-md-6 mb-3">
+                                    <label for="closePrice" class="font-weight-bold">Close price</label>
+                                    <input th:field="*{closePrice}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           name="closePrice"
+                                           id="closePrice" type="number" min="0" step="0.00001" class="form-control"
+                                           placeholder="Close price"
+                                           aria-describedby="closePriceError">
+                                    <small th:if="${#fields.hasErrors('closePrice')}" th:errors="*{closePrice}"
+                                           id="closePriceError"
+                                           class="rounded">
+                                        Close price is required.
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-6 mb-3">
+                                    <label for="financialResult" class="text-center  font-weight-bold">Financial
+                                        result</label>
+                                    <input th:field="*{financialResult}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           name="financialResult"
+                                           id="financialResult" type="number"  step="0.01" class="form-control"
+                                           placeholder="Financial result, USD"
+                                           aria-describedby="financialResultError">
+                                    <small th:if="${#fields.hasErrors('financialResult')}" th:errors="*{financialResult}"
+                                           id="financialResultError"
+                                           class="rounded">
+                                        financialResult is required.
+                                    </small>
+                                </div>
+
+
+                                <div class="form-group col-md-6 mb-3">
+
+                                    <label for="videoUrl" class=" font-weight-bold">Video Url is not required (otherwise - only last
+                                        11 symbols from Youtube)</label>
+                                    <input th:field="*{videoUrl}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="videoUrl" type="text"
+                                           class="form-control" placeholder="Video url"
+                                           aria-describedby="videoUrlError">
+                                    <small th:if="${#fields.hasErrors('videoUrl')}" th:errors="*{videoUrl}"
+                                           id="videoUrlError"
+                                           class="rounded">
+                                        videoUrl is not required.
+                                    </small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col col-md-4">
+                                    <div class="button-holder d-flex">
+                                        <input type="submit" class="btn btn-info btn-lg btn-login"
+                                               value="Post Position"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!--        Disclaimer-->
+        <div th:replace="fragments/disclaimer :: disclaimer">Disclaimer></div>
+    </div>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- <div class="line"></div> -->
+<div th:replace="fragments/sidebar-scripts :: sidebar-scripts">Disclaimer>
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <header th:fragment="navigation">
+        <nav class="navbar navbar-expand-lg gradient">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="navbar-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/economic-indicators/all">Economic Indicators</a>
+                        </li>
+<!--                        <li class="nav-item">-->
+<!--                            <a class="nav-link" href="/news/all">News</a>-->
+<!--                        </li>-->
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/positions/all">Positions</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('INVESTOR')">
+                            <a class="nav-link" href="/traders/all">Traders</a>
+                        </li>
+                        <th:block sec:authorize="!isAuthenticated()">
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users/register">Become Trader/Investor</a>
+                            </li>
+
+                        </th:block>
+
+
+                        <th:block sec:authorize="hasRole('TRADER')">
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/positions/add">Add Position</a>
+                            </li>
+
+                        </th:block>
+
+                        <li class="nav-item dropdown" sec:authorize="hasRole('MASTER')">
+                            <a class="nav-link" href="/" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Master console
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{/statistics}">Statistics</a>
+<!--                                <a class="dropdown-item" th:href="@{/news/add}">Add News</a>-->
+                                <a class="dropdown-item" th:href="@{/economi-indicators/add}">Add Economic Indicator</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+
+                            <div class="form-inline my-2 my-lg-0 welcome-block">
+                                <div class="nav-link"> Welcome,
+                                    <th:block sec:authentication="name">
+                                    </th:block>
+                                </div>
+                                <form th:action="@{/users/logout}" th:method="post">
+                                    <input class="btn btn-link btn-logout" type="submit" value="Lоgout">
+                                </form>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+</head>
+<body>
+
+</body>
+</html>
+

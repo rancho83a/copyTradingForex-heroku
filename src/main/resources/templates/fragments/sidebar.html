@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <nav th:fragment="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="/"> <img src="/images/logo_mid.png" alt="logo"></a>
+        </div>
+
+        <ul class="list-unstyled components">
+
+            <li>
+                <a href="/how-it-works">HOW IT WORKS</a>
+            </li>
+            <th:block sec:authorize="!isAuthenticated()">
+                <li>
+                    <a href="/users/login">LOGIN</a>
+                </li>
+                <li>
+                    <a href="/users/register">REGISTER</a>
+                </li>
+            </th:block>
+
+            <th:block sec:authorize="isAuthenticated()">
+                <li>
+                    <a href="/users/profile">PROFILE</a>
+                </li>
+
+            </th:block>
+
+            <li id="adding-menu">
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                   class="dropdown-toggle">INFORMATION</a>
+                <ul class="collapse list-unstyled " id="pageSubmenu">
+                    <th:block sec:authorize="hasRole('INVESTOR')">
+                        <li>
+                            <a href="/traders/all">Traders</a>
+                        </li>
+                    </th:block>
+<!--                    <li>-->
+<!--                        <a href="/news/all">News</a>-->
+<!--                    </li>-->
+                    <li>
+                        <a href="/economic-indicators/all">Economic Indicators</a>
+                    </li>
+                    <li>
+                        <a href="/positions/all">Positions</a>
+                    </li>
+                </ul>
+            </li>
+<!--            <li>-->
+<!--                <a href="#">PORTFOLIO </a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="#">CONTACT</a>-->
+<!--            </li>-->
+        </ul>
+
+<!--        <ul class="list-unstyled CTAs">-->
+<!--            <li>-->
+<!--                <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download-->
+<!--                    source</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+    </nav>
+
+
+</head>
+<body>
+
+</body>
+</html>

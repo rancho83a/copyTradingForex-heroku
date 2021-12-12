@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/fx_db?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
+    username: root
+    password: mypass
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 5MB
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  sql:
+    init:
+      mode: always
+#       mode: never
+  jpa:
+    # Choose either MySQL 8 or MySQL 5 below
+    # For MySQL 8
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    #For MySQL 5
+    #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+
+
+
+#Cloudinary Properties
+cloudinary:
+  api-key: 446412117829948
+  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: drapmo8cx
+
+#Cron
+schedulers:
+  #every 10 sec
+  subscriptionFeeCronDefense: "*/10 * * * * *"
+  subscriptionFeeCronDefense1min: "0 * * * * *"
+
+  #At 00:00:00 on every day-of-week from Monday through Friday.
+  subscriptionFeeCron: "0 0 0 * * 1-5"
+
+  #“At 00:00 on Sunday.”
+  remunerationFeeCron: "0 0 0 * * 7"

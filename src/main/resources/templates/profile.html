@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav th:replace="fragments/sidebar :: sidebar">
+        Sidebar
+    </nav>
+
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+        <!--        Navbar-->
+        <header th:replace="fragments/navbar::navigation"></header>
+
+
+        <!--Main content for every page -->
+
+        <section id="what_ctf" class="wr-what_is_ctf" th:object="${userProfile}">
+
+
+            <div class="container">
+                <div class="row my-4 align-items-center justify-content-center ">
+                    <div class="col-md-11 mb-4">
+                        <h1>Profile</h1>
+                    </div>
+                    <div class="col-12 col-lg-6 how-it-works">
+                        <div class="row how-it-works">
+                            <!--                        <th:block th:if="*{canDeleteOrUpdate}">-->
+                            <form class="form-inline" th:action="@{/users/deposit}" th:method="post">
+
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="deposit" class="sr-only">Deposit</label>
+                                    <input name="depositAmount"
+                                           type="number" class="form-control" id="deposit"
+                                           placeholder="amount" min="0.01" step="0.01">
+                                </div>
+                                <button type="submit" class="btn  btn-up-del mb-2">Deposit</button>
+                            </form>
+
+                            <form class="form-inline" th:action="@{/users/withdraw}" th:method="post">
+
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="withdraw" class="sr-only">Withdraw</label>
+
+                                    <input th:field="*{withdrawAmount}"
+                                           th:errorclass="'is-invalid bg-danger'"
+                                           id="withdraw" type="number" min="0.01" step="0.01"
+                                           class="form-control" placeholder="amount"
+                                           aria-describedby="withdrawAmountError">
+                                </div>
+                                <button type="submit" class="btn  btn-up-del mb-2">Withdraw</button>
+
+
+                            </form>
+                        </div>
+                        <small th:if="${wrongAmount}"
+                               class="rounded bg-danger text-white">
+                            Please fill amount field!
+                        </small>
+                        <section class="how-it-works card-text">
+
+                            <h4 th:text="|Full name: *{fullName}|" class="card-title"> title</h4>
+
+                            <h5 th:text="|Current capital, USD: *{currentCapital}|" class="card-title"> title</h5>
+
+                            <small th:if="${joinedInvestorCanNotCopy}"
+                                   class="rounded bg-danger text-white">
+                                Your capital is less than 100 USD You can not copy trader`s position!
+                            </small>
+
+                            <small th:if="${traderCanNotTrade}"
+                                   class="rounded bg-danger text-white">
+                                Your capital is less than 1000 USD. You can not trade! Please, fund deposit.
+                            </small>
+
+                            <!--                            <h5 th:text="|Buffered Amount, USD: *{bufferedAmount}|" class="card-title"> title</h5>-->
+                            <h5 th:text="|Total deposit, USD: *{totalDeposit}|" class="card-title"> title</h5>
+                            <h5 th:text="|Total withdraw, USD: *{totalWithdraw}|" class="card-title"> title</h5>
+
+                            <p th:text="|Email: *{email}|"> info</p>
+                            <p th:text="|Age: *{age}|"> info</p>
+                            <p th:text="|Expirience, year: *{experience}|"> info</p>
+                            <!--                            <p th:text="|Curent Capital: *{currentCapital}|"> info</p>-->
+                            <p th:text="|Total Yield: *{totalYield} %|"> info</p>
+
+                            <th:block th:if="${isJoinedToCopy}">
+                                <h4 th:text="|My trader: *{myTrader} |"> info</h4>
+                                <h4 th:text="|Commission to pay: *{commission} USD|"> info</h4>
+
+
+                                <a th:href="@{/traders/{traderId}/revoke (traderId = *{myTraderId})}"
+                                   class="btn btn-pos-details">Revoke</a>
+                            </th:block>
+                            <th:block th:if="${haveInvestors}">
+
+                                <h5 th:text="|My Investors:|"> info</h5>
+                                <div th:each="i : ${investors}">
+                                    <p th:text="${i.fullName} + '   |  Waiting for commission:  ' +${i.commission} +'USD'">
+                                        info</p>
+                                </div>
+                            </th:block>
+
+                        </section>
+
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <img th:src="*{imageUrl}" class="img-fluid py-2" alt="Position image">
+<!--                        th:if="!${isJoinedToCopy}"-->
+                        <div class="mx-5" >
+<!--                            <form th:action="@{/users/{id}/delete (id = *{id})}" th:method="delete">-->
+                            <form th:action="@{/users/delete}" th:method="delete">
+                                <input type="submit" class="btn btn-pos-details px-5" value="Delete Profile"/>
+                            </form>
+                            <small th:if="!${canDeleteProfile}"
+                                   class="rounded bg-danger text-white p-1">
+                                Please withdraw your amount first!
+                            </small>
+
+<!--                            -->
+<!--                            <a  th:href="@{/users/{id}/delete (id = *{id})}"-->
+<!--                                class="btn btn-pos-details px-5">Delete Profile</a>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div clas="row my-4 align-items-center justify-content-center">
+
+                    <div class="col-lg-7 how-it-works">
+
+                        <h2>Fund History</h2>
+
+                        <table class="table table-dark">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Operation</th>
+                                <th scope="col">Amount, USD</th>
+                                <th scope="col">Current Capital, USD</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="fh : ${fundHistory}">
+                                <th scope="row" th:text="${fh.id}">1</th>
+                                <td th:text="${fh.created}">Date</td>
+                                <td th:text="${fh.operation}">Operation</td>
+                                <td th:text="${fh.amount}">Amount</td>
+                                <td th:text="${fh.currentCapital}">Amount</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!--        Disclaimer-->
+        <div th:replace="fragments/disclaimer :: disclaimer">Disclaimer></div>
+    </div>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+<!-- <div class="line"></div> -->
+<div th:replace="fragments/sidebar-scripts :: sidebar-scripts">Disclaimer>
+</div>
+</body>
+</html>
