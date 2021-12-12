@@ -5,8 +5,8 @@ plugins {
 }
 
 group = 'forex'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+//version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '14'
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ dependencies {
 
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.hsqldb:hsqldb'

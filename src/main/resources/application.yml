@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/fx_db?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
-    username: root
-    password: mypass
+    url: ${JDBC_DATABASE_URL:}
+    username: ${JDBC_DATABASE_USERNAME:}
+    password: ${JDBC_DATABASE_PASSWORD:}
   servlet:
     multipart:
       max-file-size: 1MB
@@ -19,7 +19,10 @@ spring:
   jpa:
     # Choose either MySQL 8 or MySQL 5 below
     # For MySQL 8
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    # database-platform: org.hibernate.dialect.MySQL8Dialect
+
+    #FOr PostGre SDL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     #For MySQL 5
     #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
@@ -49,3 +52,5 @@ schedulers:
 
   #“At 00:00 on Sunday.”
   remunerationFeeCron: "0 0 0 * * 7"
+
+server.port: ${PORT:8080}
